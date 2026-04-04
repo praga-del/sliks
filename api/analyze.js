@@ -101,6 +101,7 @@ export default async function handler(req, res) {
     parsed.confidence_pct           = parsed.confidence_pct           || 20;
     parsed.visual_evidence          = parsed.visual_evidence          || 'Could not assess from image.';
     parsed.deposit_analysis         = parsed.deposit_analysis         || '';
+    parsed.particle_size_fractions  = parsed.particle_size_fractions  || { ultrafine_pct: 0, fine_pct: 0, coarse_pct: 0, basis: 'Particle size fraction data not returned by model.' };
     parsed.likely_pollutants        = parsed.likely_pollutants        || [];
     parsed.site_context_correlation = parsed.site_context_correlation || '';
     parsed.limitations              = parsed.limitations              || '';

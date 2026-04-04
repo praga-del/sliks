@@ -17,9 +17,10 @@ export default async function handler(req, res) {
   const resolvedMime = ['image/jpeg','image/jpg','image/png','image/webp'].includes(mimeType)
     ? mimeType : 'image/jpeg';
 
-  // gemini-1.5-flash: universal free tier, 1500 req/day, excellent vision
-  // Works in all regions including India without billing setup
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
+  // gemini-2.5-flash — confirmed available for this API key
+  // Using v1beta for 2.5-flash (required for this generation)
+  // thinkingConfig: budgetTokens 0 = disable thinking mode → clean JSON output
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_KEY}`;
 
   const body = {
     contents: [{
@@ -30,7 +31,10 @@ export default async function handler(req, res) {
     }],
     generationConfig: {
       temperature: 0.2,
-      maxOutputTokens: 1500
+      maxOutputTokens: 1500,
+      thinkingConfig: {
+        thinkingBudget: 0   // disables thinking mode → direct clean JSON output
+      }
     },
     safetySettings: [
       { category: 'HARM_CATEGORY_HARASSMENT',        threshold: 'BLOCK_NONE' },
@@ -55,14 +59,23 @@ export default async function handler(req, res) {
       });
     }
 
-    // Extract text from response parts
+    // Extract text — skip thought parts, only grab real text output
     const parts = data?.candidates?.[0]?.content?.parts || [];
-    let rawText = parts.map(p => p.text || '').join('').trim();
+    let rawText = '';
+    for (const part of parts) {
+      if (part.text && part.thought !== true) {
+        rawText += part.text;
+      }
+    }
+    // Fallback: grab everything if above is empty
+    if (!rawText.trim()) {
+      rawText = parts.map(p => p.text || '').join('').trim();
+    }
 
-    if (!rawText) {
+    if (!rawText.trim()) {
       return res.status(500).json({
         error: 'Empty response from Gemini.',
-        debug: JSON.stringify(data).slice(0, 300)
+        debug: JSON.stringify(data).slice(0, 400)
       });
     }
 
@@ -76,23 +89,23 @@ export default async function handler(req, res) {
     if (start === -1 || end === -1) {
       return res.status(500).json({
         error: 'No JSON in Gemini response.',
-        raw: rawText.slice(0, 300)
+        raw: rawText.slice(0, 400)
       });
     }
 
     const parsed = JSON.parse(rawText.slice(start, end + 1));
 
     // Ensure all required fields exist
-    parsed.pollution_level    = parsed.pollution_level    || 'Insufficient Image Quality';
-    parsed.confidence         = parsed.confidence         || 'Low';
-    parsed.confidence_pct     = parsed.confidence_pct     || 20;
-    parsed.visual_evidence    = parsed.visual_evidence    || 'Could not assess from image.';
-    parsed.deposit_analysis   = parsed.deposit_analysis   || '';
-    parsed.likely_pollutants  = parsed.likely_pollutants  || [];
+    parsed.pollution_level          = parsed.pollution_level          || 'Insufficient Image Quality';
+    parsed.confidence               = parsed.confidence               || 'Low';
+    parsed.confidence_pct           = parsed.confidence_pct           || 20;
+    parsed.visual_evidence          = parsed.visual_evidence          || 'Could not assess from image.';
+    parsed.deposit_analysis         = parsed.deposit_analysis         || '';
+    parsed.likely_pollutants        = parsed.likely_pollutants        || [];
     parsed.site_context_correlation = parsed.site_context_correlation || '';
-    parsed.limitations        = parsed.limitations        || '';
-    parsed.recommendations    = parsed.recommendations    || '';
-    parsed.summary            = parsed.summary            || 'Analysis could not be completed.';
+    parsed.limitations              = parsed.limitations              || '';
+    parsed.recommendations          = parsed.recommendations          || '';
+    parsed.summary                  = parsed.summary                  || 'Analysis could not be completed.';
 
     return res.status(200).json(parsed);
 

@@ -1,141 +1,82 @@
-  // SilkSense — Vercel Serverless Function
-  // Model: gemini-2.5-flash (best free vision model as of 2025-26)
-  // Supports: multimodal image + text, free tier ~500 req/day, no credit card needed
+export const config = { api: { bodyParser: { sizeLimit: '25mb' } } };
 
-  export const config = {
-    api: {
-      bodyParser: {
-        sizeLimit: '25mb'   // supports up to 20MB images + base64 overhead
-      }
-    }
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed.' });
+
+  const GEMINI_KEY = process.env.GEMINI_API_KEY;
+  if (!GEMINI_KEY) return res.status(500).json({ error: 'GEMINI_API_KEY not set in Vercel environment variables.' });
+
+  const { imageBase64, mimeType, prompt } = req.body;
+  if (!imageBase64) return res.status(400).json({ error: 'Missing imageBase64.' });
+  if (!prompt) return res.status(400).json({ error: 'Missing prompt.' });
+
+  const resolvedMime = ['image/jpeg','image/jpg','image/png','image/webp'].includes(mimeType) ? mimeType : 'image/jpeg';
+
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+
+  const body = {
+    contents: [{
+      parts: [
+        { inline_data: { mime_type: resolvedMime, data: imageBase64 } },
+        { text: prompt }
+      ]
+    }],
+    generationConfig: { temperature: 0.2, maxOutputTokens: 1500 },
+    safetySettings: [
+      { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_NONE' },
+      { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_NONE' },
+      { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
+      { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
+    ]
   };
 
-  export default async function handler(req, res) {
-    // ── CORS headers (allow any origin for GitHub Pages / local dev) ──
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  try {
+    const geminiRes = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
 
-    if (req.method === 'OPTIONS') return res.status(200).end();
-    if (req.method !== 'POST') {
-      return res.status(405).json({ error: 'Method not allowed. Use POST.' });
+    const data = await geminiRes.json();
+
+    if (!geminiRes.ok) {
+      return res.status(geminiRes.status).json({ error: data?.error?.message || `Gemini error ${geminiRes.status}` });
     }
 
-    // ── API Key from Vercel environment variable ──
-    const GEMINI_KEY = process.env.GEMINI_API_KEY;
-    if (!GEMINI_KEY) {
-      return res.status(500).json({
-        error: 'GEMINI_API_KEY is not set. Go to Vercel → Project → Settings → Environment Variables and add it.'
-      });
+    // Extract text from all parts
+    const parts = data?.candidates?.[0]?.content?.parts || [];
+    let rawText = parts.map(p => p.text || '').join('');
+
+    if (!rawText.trim()) {
+      return res.status(500).json({ error: 'Empty response from Gemini.', debug: JSON.stringify(data).slice(0,300) });
     }
 
-    // ── Parse request body ──
-    const { imageBase64, mimeType, prompt } = req.body;
+    // Strip markdown fences and extract JSON
+    rawText = rawText.replace(/```json/gi, '').replace(/```/gi, '').trim();
+    const start = rawText.indexOf('{');
+    const end = rawText.lastIndexOf('}');
 
-    if (!imageBase64) {
-      return res.status(400).json({ error: 'Missing imageBase64 in request body.' });
+    if (start === -1 || end === -1) {
+      return res.status(500).json({ error: 'No JSON found in response.', raw: rawText.slice(0, 300) });
     }
-    if (!prompt) {
-      return res.status(400).json({ error: 'Missing prompt in request body.' });
-    }
 
-    // Validate image mime type
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
-    const resolvedMime = allowedTypes.includes(mimeType) ? mimeType : 'image/jpeg';
+    const parsed = JSON.parse(rawText.slice(start, end + 1));
 
-    // ── Gemini 2.5 Flash API call ──
-    // gemini-2.5-flash: best free vision model — multimodal, fast, ~500 req/day free
-    const GEMINI_MODEL = 'gemini-2.5-flash';
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_KEY}`;
+    // Fill missing fields
+    parsed.pollution_level   = parsed.pollution_level   || 'Insufficient Image Quality';
+    parsed.confidence        = parsed.confidence        || 'Low';
+    parsed.confidence_pct    = parsed.confidence_pct    || 20;
+    parsed.visual_evidence   = parsed.visual_evidence   || 'Could not assess.';
+    parsed.likely_pollutants = parsed.likely_pollutants || [];
+    parsed.summary           = parsed.summary           || 'Analysis incomplete.';
 
-    const requestBody = {
-      contents: [
-        {
-          parts: [
-            {
-              inline_data: {
-                mime_type: resolvedMime,
-                data: imageBase64
-              }
-            },
-            {
-              text: prompt
-            }
-          ]
-        }
-      ],
-      generationConfig: {
-        temperature: 0.2,          // low temperature = consistent, factual analysis
-        maxOutputTokens: 1500,
-        responseMimeType: 'application/json'  // force JSON output directly
-      },
-      safetySettings: [
-        { category: 'HARM_CATEGORY_HARASSMENT',        threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_HATE_SPEECH',       threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_NONE' },
-        { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_NONE' }
-      ]
-    };
+    return res.status(200).json(parsed);
 
-    try {
-      const geminiRes = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestBody)
-      });
-
-      const data = await geminiRes.json();
-
-      // Handle Gemini-level errors
-      if (!geminiRes.ok) {
-        const errMsg = data?.error?.message || `Gemini API error ${geminiRes.status}`;
-        console.error('Gemini error:', errMsg);
-        return res.status(geminiRes.status).json({ error: errMsg });
-      }
-
-      // Extract text from Gemini response
-      const rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
-      if (!rawText) {
-        const finishReason = data?.candidates?.[0]?.finishReason;
-        if (finishReason === 'SAFETY') {
-          return res.status(400).json({ error: 'Image was blocked by safety filters. Please use a clearer spider web photo.' });
-        }
-        return res.status(500).json({ error: 'Empty response from Gemini. Try again with a clearer image.' });
-      }
-
-      // Clean and parse JSON (strip markdown fences if present)
-      let cleanText = rawText.replace(/```json\s*/gi, '').replace(/```\s*/gi, '').trim();
-
-      // Find first { and last } to extract valid JSON
-      const jsonStart = cleanText.indexOf('{');
-      const jsonEnd   = cleanText.lastIndexOf('}');
-
-      if (jsonStart === -1 || jsonEnd === -1) {
-        console.error('Could not find JSON in response:', cleanText.slice(0, 300));
-        return res.status(500).json({
-          error: 'Gemini returned an unexpected format. Please try again.',
-          raw: cleanText.slice(0, 300)
-        });
-      }
-
-      const jsonString = cleanText.slice(jsonStart, jsonEnd + 1);
-      const parsed = JSON.parse(jsonString);
-
-      // Validate required fields exist
-      const required = ['pollution_level', 'confidence', 'visual_evidence', 'likely_pollutants', 'summary'];
-      for (const field of required) {
-        if (!parsed[field]) {
-          parsed[field] = parsed[field] || (field === 'likely_pollutants' ? [] : 'Not assessed');
-        }
-      }
-
-      return res.status(200).json(parsed);
-
-    } catch (err) {
-      console.error('SilkSense handler error:', err);
-      return res.status(500).json({
-        error: err.message || 'Internal server error. Please try again.'
-      });
-    }
+  } catch (err) {
+    return res.status(500).json({ error: err.message || 'Internal server error.' });
   }
+}

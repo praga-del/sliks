@@ -398,42 +398,6 @@
   }
   .limitations-box p { font-size: 13px; color: #664400; line-height: 1.65; }
 
-  /* ─── PARTICLE RATIO PANEL ─── */
-  .ratio-bar-track {
-    display: flex; height: 32px; border-radius: 8px; overflow: hidden;
-    margin-bottom: 12px; border: 1px solid var(--border);
-  }
-  .ratio-seg {
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 600; transition: width 1.2s ease;
-    overflow: hidden;
-  }
-  .ratio-seg.ultrafine { background: #6b3fa0; color: white; }
-  .ratio-seg.fine      { background: #0d6e6e; color: white; }
-  .ratio-seg.coarse    { background: #c17f3b; color: white; }
-  .ratio-legend {
-    display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 10px;
-  }
-  .ratio-legend-item {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 12px; color: #556;
-  }
-  .ratio-swatch {
-    width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0;
-  }
-  .ratio-basis {
-    font-size: 12px; color: #889; line-height: 1.6; margin-top: 4px;
-    padding: 10px 14px; background: var(--mist); border-radius: 8px;
-    border: 1px solid var(--border);
-  }
-  .lit-badge {
-    display: inline-block; font-size: 10px; font-weight: 600;
-    letter-spacing: 0.4px; color: var(--teal);
-    background: rgba(13,110,110,0.08); border: 1px solid rgba(13,110,110,0.18);
-    padding: 2px 8px; border-radius: 10px; margin-left: 6px;
-    font-family: 'JetBrains Mono', monospace;
-  }
-
   .disclaimer {
     background: var(--mist); border-radius: 12px;
     padding: 16px 20px; margin-top: 24px;
@@ -443,6 +407,123 @@
   .disclaimer strong { color: #667; }
 
   .new-btn { margin-top: 24px; }
+
+
+
+  /* ─── DEPOSIT COLOR KEY ─── */
+  .color-key-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .color-chip {
+    display: flex; align-items: center; gap: 7px;
+    padding: 6px 10px; border-radius: 8px; border: 1px solid var(--border);
+    font-size: 11px; font-weight: 600; background: white;
+  }
+  .color-dot { width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0; }
+  .color-chip.detected { border-color: var(--teal); background: var(--teal-pale); }
+  .color-chip.dominant { border-color: #c0392b; background: rgba(192,57,43,0.07); font-size:12px; }
+  .color-chip-label { color: var(--ink); }
+  .color-chip-source { color: #aaa; font-weight: 400; margin-left: 2px; }
+
+  /* ─── SOURCE FINGERPRINT ─── */
+  .source-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .source-badge {
+    padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600;
+    border: 1.5px solid; display: flex; align-items: center; gap: 6px;
+  }
+  .source-badge.primary   { background: rgba(192,57,43,0.10); color: #c0392b; border-color: rgba(192,57,43,0.3); }
+  .source-badge.secondary { background: rgba(212,128,26,0.10); color: #d4801a; border-color: rgba(212,128,26,0.3); }
+  .source-badge.minor     { background: var(--mist); color: #667; border-color: var(--border); }
+  .source-confidence { font-size: 11px; color: #aaa; margin-top: 6px; }
+
+  /* ─── WEB STRUCTURAL INTEGRITY ─── */
+  .integrity-meter { margin-top: 10px; }
+  .integrity-track {
+    height: 18px; background: var(--mist); border-radius: 10px;
+    overflow: hidden; border: 1px solid var(--border); margin-bottom: 6px;
+  }
+  .integrity-fill {
+    height: 100%; border-radius: 10px; transition: width 1.2s ease;
+    display: flex; align-items: center; justify-content: flex-end; padding-right: 8px;
+    font-size: 10px; font-weight: 700; color: white; letter-spacing: 0.5px;
+  }
+  .integrity-observations { font-size: 12px; color: #556; margin-top: 6px; line-height: 1.6; }
+
+  /* ─── WHO AQG TIER ─── */
+  .who-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 12px; }
+  .who-table th { background: var(--teal); color: white; padding: 7px 10px; text-align: left; font-size: 11px; letter-spacing: 0.5px; }
+  .who-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .who-table tr.highlight td { background: rgba(13,110,110,0.07); font-weight: 600; }
+  .who-tier-badge {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: 700;
+  }
+  .who-tier-1 { background: rgba(26,138,74,0.12); color: var(--ok); }
+  .who-tier-2 { background: rgba(212,128,26,0.12); color: var(--warn); }
+  .who-tier-3 { background: rgba(192,57,43,0.10); color: var(--danger); }
+  .who-tier-4 { background: rgba(100,0,0,0.10); color: #7b0000; }
+
+  /* ─── LAB TEST GUIDE ─── */
+  .lab-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+  .lab-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border);
+    background: var(--mist); font-size: 12px;
+  }
+  .lab-row.recommended { border-color: var(--teal); background: var(--teal-pale); }
+  .lab-icon { font-size: 18px; flex-shrink: 0; }
+  .lab-name { font-weight: 700; color: var(--teal); margin-bottom: 2px; font-size: 13px; }
+  .lab-desc { color: #556; line-height: 1.4; }
+  .lab-badge { margin-left: auto; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; white-space: nowrap; flex-shrink: 0; }
+  .lab-badge.must { background: #c0392b; color: white; }
+  .lab-badge.recommended { background: var(--teal); color: white; }
+  .lab-badge.optional { background: #aaa; color: white; }
+
+  /* ─── WEB TYPE ─── */
+  .webtype-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 16px; border-radius: 10px; border: 1.5px solid var(--teal);
+    background: var(--teal-pale); font-size: 13px; font-weight: 600;
+    color: var(--teal); margin-top: 8px;
+  }
+  .webtype-note { font-size: 12px; color: #667; margin-top: 6px; line-height: 1.5; }
+
+  /* ─── EXPOSURE DURATION ─── */
+  .exposure-rate { font-size: 13px; color: var(--ink); margin-top: 8px; line-height: 1.7; }
+  .exposure-rate strong { color: var(--teal); }
+
+  /* ─── LITERATURE PANEL ─── */
+  .lit-panel { margin-top: 12px; }
+  .lit-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .lit-item:last-child { border-bottom: none; }
+  .lit-year {
+    flex-shrink: 0; width: 36px; height: 36px; border-radius: 8px;
+    background: var(--teal); color: white; font-size: 10px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.2;
+  }
+  .lit-ref { font-weight: 600; color: var(--ink); margin-bottom: 2px; }
+  .lit-relevance { color: #778; line-height: 1.4; }
+
+  /* ─── FINE/COARSE RATIO ─── */
+  .ratio-section { margin-bottom: 24px; }
+  .ratio-bars { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+  .ratio-row { display: flex; align-items: center; gap: 10px; }
+  .ratio-label { font-size: 11px; font-weight: 600; color: #667; width: 88px; flex-shrink: 0; text-transform: uppercase; letter-spacing: 0.4px; }
+  .ratio-track { flex: 1; height: 14px; background: var(--mist); border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+  .ratio-fill { height: 100%; border-radius: 8px; transition: width 1.2s ease; }
+  .ratio-fill.fine    { background: linear-gradient(90deg, #c0392b, #e74c3c); }
+  .ratio-fill.coarse  { background: linear-gradient(90deg, #d4801a, #f39c12); }
+  .ratio-fill.ultrafine { background: linear-gradient(90deg, #7b0000, #a93226); }
+  .ratio-pct { font-size: 12px; font-family: 'JetBrains Mono', monospace; color: var(--teal); width: 36px; text-align: right; flex-shrink: 0; }
+  .ratio-meta { font-size: 11px; color: #aaa; margin-top: 8px; line-height: 1.5; }
+  .ratio-meta strong { color: #778; }
+  .ratio-verdict {
+    margin-top: 10px; padding: 10px 14px; border-radius: 10px;
+    font-size: 12px; line-height: 1.6;
+    background: rgba(13,110,110,0.05); border: 1px solid var(--border);
+  }
+  .ratio-verdict strong { color: var(--teal); }
 
   /* ─── ERROR ─── */
   .error-box {
@@ -651,6 +732,23 @@
           <option value="mixed">Mixed Background</option>
         </select>
       </div>
+      <div class="form-group">
+        <label class="field-label">Web Type <span style="font-weight:400;color:#aaa">(Stojanowska 2022)</span></label>
+        <select id="webType">
+          <option value="unknown">Unknown / Not sure</option>
+          <option value="orb">Orb web — flat, circular, radial threads</option>
+          <option value="sheet">Sheet web — flat horizontal sheet</option>
+          <option value="cobweb">Cobweb — irregular 3D tangle</option>
+          <option value="funnel">Funnel web — tube-shaped entrance</option>
+        </select>
+        <span class="field-hint">Orb webs give most reliable results</span>
+      </div>
+      <div class="form-group">
+        <label class="field-label">Exposure Duration <span style="font-weight:400;color:#aaa">(days)</span></label>
+        <input type="number" id="exposureDays" placeholder="e.g., 21" min="1" max="180"
+               style="width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:14px;font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--mist);">
+        <span class="field-hint">Optimal: 14–60 days (Stojanowska 2022)</span>
+      </div>
       <div class="form-group full">
         <label class="field-label">Additional Observations <span style="font-weight:400; color:#aaa">(optional)</span></label>
         <textarea id="observations" placeholder="e.g., web located near a bus stop, visible dark deposits on threads, web appears heavily loaded, nearby construction activity..."></textarea>
@@ -841,11 +939,13 @@ async function runAnalysis() {
   const season = document.getElementById('season').value;
   const background = document.getElementById('background').value;
   const observations = document.getElementById('observations').value.trim();
+  const webType = document.getElementById('webType').value;
+  const exposureDays = document.getElementById('exposureDays').value || 'unknown';
 
   goToStep(3);
   animateProgress();
 
-  const prompt = buildPrompt({ siteType, city, webAge, weather, season, background, observations });
+  const prompt = buildPrompt({ siteType, city, webAge, weather, season, background, observations, webType, exposureDays });
 
   try {
     const result = await callClaudeAPI(prompt);
@@ -855,80 +955,129 @@ async function runAnalysis() {
   }
 }
 
-function buildPrompt({ siteType, city, webAge, weather, season, background, observations }) {
+function buildPrompt({ siteType, city, webAge, weather, season, background, observations, webType, exposureDays }) {
   const siteLabels = {
     industrial: 'Industrial Zone / Factory Area',
-    roadside: 'Roadside / High Traffic Area',
-    residential: 'Residential Area',
-    construction: 'Near Active Construction Site',
+    roadside:   'Roadside / High Traffic Area',
+    residential:'Residential Area',
+    construction:'Near Active Construction Site',
     commercial: 'Commercial / Market Area',
-    rural: 'Rural / Agricultural Area',
-    coastal: 'Coastal / Port Area',
-    forest: 'Forest / Green Area'
+    rural:      'Rural / Agricultural Area',
+    coastal:    'Coastal / Port Area',
+    forest:     'Forest / Green Area'
+  };
+  const webTypeLabels = {
+    orb:     'Orb web (flat, circular, radial threads) — most reliable for biomonitoring',
+    sheet:   'Sheet web (flat horizontal sheet)',
+    cobweb:  'Cobweb (irregular 3D tangle)',
+    funnel:  'Funnel web (tube-shaped entrance)',
+    unknown: 'Unknown web type'
   };
   const bgLabels = {
-    plain_dark: 'plain dark background (good conditions)',
-    sky: 'open sky background (good conditions)',
-    cluttered: 'cluttered background with walls, bars, or tiles (may affect assessment)',
-    mixed: 'mixed background'
+    plain_dark:'plain dark background (good conditions)',
+    sky:       'open sky background (good conditions)',
+    cluttered: 'cluttered background — focus on threads only',
+    mixed:     'mixed background'
   };
 
-  return `You are an expert environmental scientist and air quality analyst specializing in spider web biomonitoring. You have deep knowledge of spider web passive sampling, particulate matter characterization, and air pollution patterns in urban environments.
+  return 'You are an expert environmental scientist specialising in spider web biomonitoring and air quality assessment. You have deep knowledge of particulate matter characterisation, urban air pollution patterns, and spider silk as a passive sampler.\n\n' +
+    'This is a REAL scientific screening analysis. Only report what you can genuinely observe. Never fabricate numbers.\n\n' +
+    'SITE CONTEXT:\n' +
+    '- Location: ' + city + '\n' +
+    '- Site Type: ' + (siteLabels[siteType] || siteType) + '\n' +
+    '- Web Type: ' + (webTypeLabels[webType] || webType || 'Not specified') + '\n' +
+    '- Web Age: ' + webAge + '\n' +
+    '- Exposure Duration: ' + exposureDays + ' days\n' +
+    '- Weather at sampling: ' + weather + '\n' +
+    '- Season: ' + season + '\n' +
+    '- Image background: ' + (bgLabels[background] || background) + '\n' +
+    '- Additional observations: ' + (observations || 'None') + '\n\n' +
 
-You will analyze this spider web image for air quality assessment. This is a REAL scientific analysis — do not fabricate numbers or make up data. Only report what you can genuinely observe in the image.
-
-SITE CONTEXT PROVIDED BY USER:
-- Location: ${city}
-- Site Type: ${siteLabels[siteType] || siteType}
-- Web Age: ${webAge}
-- Weather at sampling: ${weather}
-- Season: ${season}
-- Image background: ${bgLabels[background] || background}
-- Additional observations: ${observations || 'None provided'}
-
-INSTRUCTIONS FOR ANALYSIS:
-1. Carefully examine the spider web in the image. Look for:
-   - Particle deposits visible ON the silk threads (darkness, color changes, clustering)
-   - Distribution pattern of deposits (uniform vs patchy vs concentrated)
-   - Color of deposits (black/dark grey = soot/carbon; reddish-brown = iron/industrial; white/grey = cement/road dust; yellow = pollen — NOT pollution)
-   - Structural integrity of the web (damage, breaks, deformation)
-   - Overall thread clarity (clean/slightly loaded/heavily loaded)
-   - Coverage area with deposits
-
-2. PARTICLE SIZE FRACTION ESTIMATION (required field — scientific basis below):
-   Estimate the proportional split between three PM fractions based on visual morphology of deposits:
-   - Ultrafine (PM1, <1 µm): Inferred from overall thread discoloration/darkening with no visible individual particles. Ultrafine particles embed in silk protein and cause uniform colour change. Source: Górka et al. (2018), Aerosol Sci — nanofibers of cribellate silk trap ultrafine particles by interception.
-   - Fine (PM2.5, 1–2.5 µm): Uniform dark or grey film/coating visible on threads without distinct clumps. Fine particles adhere by electrostatic and van der Waals forces. Source: Bartz et al. (2021) — 92–97% of particles collected on webs during 40-day exposure were <10 µm, with fine fraction dominant.
-   - Coarse (PM10, 2.5–10 µm): Visible specks, granules, or irregular clumps on silk. Coarser particles settle by gravitational impaction. Source: Stojanowska et al. (2022), Integr Environ Assess Manag — coarse fraction less abundant, more site-specific.
-   Your three percentages must sum to 100. Be honest if image quality limits this assessment. Express uncertainty in the "basis" field. These are QUALITATIVE VISUAL ESTIMATES, not measurements.
-
-3. If the background is cluttered, focus ONLY on what is visible ON the silk threads themselves. Ignore background elements.
-
-4. Be HONEST about image quality — if you cannot clearly see the web or make a confident assessment, say so and explain why.
-
-5. Do NOT give fake PM2.5 numbers or pretend to measure exact concentrations. Express uncertainty honestly.
-
-IMPORTANT: If the image does not clearly show a spider web, or if you cannot distinguish deposits from background noise, report "Insufficient Image Quality" and explain what would make a better image.
-
-Respond in this EXACT JSON format (no markdown, no backticks):
-{
-  "pollution_level": "Low|Moderate|High|Severe|Insufficient Image Quality",
-  "confidence": "Low|Medium|High",
-  "confidence_pct": 45,
-  "visual_evidence": "Detailed description of exactly what you see on the silk threads",
-  "deposit_analysis": "Analysis of deposit color, distribution, and density patterns",
-  "particle_size_fractions": {
-    "ultrafine_pct": 15,
-    "fine_pct": 60,
-    "coarse_pct": 25,
-    "basis": "Fine fraction dominant: uniform dark film on threads consistent with PM2.5 soot adhesion. Visible granules in lower left indicate coarse fraction (PM10). Ultrafine inferred from thread discoloration. Estimates based on Bartz et al. 2021 visual morphology criteria."
-  },
-  "likely_pollutants": ["PM2.5", "Carbon particles", "Road dust"],
-  "site_context_correlation": "How the site type and conditions support or modify the visual findings",
-  "limitations": "Honest statement of what factors limit this assessment",
-  "recommendations": "Practical recommendations for follow-up or confirmation",
-  "summary": "2-3 sentence plain English summary suitable for a non-expert"
-}`;
+    'ANALYSIS INSTRUCTIONS:\n' +
+    '1. DEPOSIT COLOUR CLASSIFICATION (Stojanowska 2022 · Muzamil 2024):\n' +
+    '   Black/dark grey = carbonaceous soot, diesel exhaust, traffic\n' +
+    '   Red-brown/rust = iron oxide, industrial emissions, metallic wear\n' +
+    '   White/light grey = cement dust, road dust, crustal particles\n' +
+    '   Yellow = pollen — NOT a pollutant, do not classify as pollution\n' +
+    '   Mixed/unknown = report honestly\n\n' +
+    '2. FINE/COARSE RATIO (Górka et al. 2018 · Bartz et al. 2021):\n' +
+    '   Fine PM2.5 (<2.5µm): uniform dark smearing, thread discolouration, smooth coating\n' +
+    '   Coarse PM10 (2.5–10µm): visible granular specks, clusters on threads\n' +
+    '   Ultrafine (<0.1µm): deep black staining embedded in silk\n\n' +
+    '3. SOURCE FINGERPRINTING (Muzamil 2024 PCA clusters):\n' +
+    '   Traffic: fine-dominant, black soot, near roads\n' +
+    '   Industrial: red-brown iron + heavy metals, mixed fine/coarse\n' +
+    '   Construction: coarse-dominant, white/grey, near sites\n' +
+    '   Mixed urban: combined signatures\n\n' +
+    '4. WEB STRUCTURAL INTEGRITY (Su et al. 2018 · Stojanowska 2022):\n' +
+    '   Score 0–100%: 100% = perfect geometry, no breaks\n' +
+    '   Consider: thread breakage, deformation, clogging, missing sections\n\n' +
+    '5. EXPOSURE DURATION EFFECT (Stojanowska 2022 Table 2):\n' +
+    '   Adjust pollution assessment based on ' + exposureDays + ' days exposure\n' +
+    '   <7 days: early accumulation, may underestimate\n' +
+    '   14–60 days: optimal biomonitoring window\n' +
+    '   >90 days: saturation possible, overestimation risk\n\n' +
+    '6. WHO AQG TIER (WHO 2021 Global AQG · Alotaibi 2024):\n' +
+    '   Classify visual pollution level against WHO tiers:\n' +
+    '   AQG Level (cleanest) → Interim Target 1/2/3/4 (most polluted)\n\n' +
+    '7. LAB TEST RECOMMENDATION (Stojanowska 2022 methods table):\n' +
+    '   Based on deposit type, recommend which lab tests to confirm findings\n\n' +
+    'Be HONEST — if image quality is insufficient, say so.\n' +
+    'If background is cluttered, focus only on what is ON the silk threads.\n\n' +
+    'Respond ONLY with this JSON (no markdown, no backticks, no extra text):\n' +
+    '{\n' +
+    '  "pollution_level": "Low|Moderate|High|Severe|Insufficient Image Quality",\n' +
+    '  "confidence": "Low|Medium|High",\n' +
+    '  "confidence_pct": 65,\n' +
+    '  "summary": "2-3 sentence plain English summary",\n' +
+    '  "visual_evidence": "Detailed description of what you see on silk threads",\n' +
+    '  "deposit_analysis": "Analysis of deposit patterns and density",\n' +
+    '  "deposit_colors": {\n' +
+    '    "dominant_color": "black|red-brown|white-grey|yellow|mixed",\n' +
+    '    "dominant_source": "traffic|industrial|construction|natural|mixed",\n' +
+    '    "colors_detected": ["black", "white-grey"],\n' +
+    '    "color_interpretation": "One sentence linking colors to sources per Stojanowska 2022",\n' +
+    '    "pollen_present": false\n' +
+    '  },\n' +
+    '  "particle_fractions": {\n' +
+    '    "fine_pct": 40,\n' +
+    '    "coarse_pct": 45,\n' +
+    '    "ultrafine_pct": 15,\n' +
+    '    "dominant_fraction": "fine|coarse|ultrafine|mixed",\n' +
+    '    "fine_evidence": "Visual cues for fine PM2.5",\n' +
+    '    "coarse_evidence": "Visual cues for coarse PM10",\n' +
+    '    "ultrafine_evidence": "Visual cues for ultrafine or absence",\n' +
+    '    "health_implication": "One sentence on health significance"\n' +
+    '  },\n' +
+    '  "source_fingerprint": {\n' +
+    '    "primary_source": "traffic|industrial|construction|agricultural|mixed|unknown",\n' +
+    '    "secondary_source": "traffic|industrial|construction|agricultural|none",\n' +
+    '    "source_confidence": "Low|Medium|High",\n' +
+    '    "fingerprint_reasoning": "Why these sources, citing deposit evidence"\n' +
+    '  },\n' +
+    '  "web_integrity": {\n' +
+    '    "score_pct": 75,\n' +
+    '    "grade": "Excellent|Good|Fair|Poor|Severely Damaged",\n' +
+    '    "observations": "Thread breaks, deformation, clogging, missing sections",\n' +
+    '    "pollution_impact": "Whether structural damage is pollution-related"\n' +
+    '  },\n' +
+    '  "who_aqg": {\n' +
+    '    "tier": "AQG Level|Interim Target 1|Interim Target 2|Interim Target 3|Interim Target 4",\n' +
+    '    "tier_reasoning": "Why this tier based on visual evidence",\n' +
+    '    "pm25_range_estimate": "e.g. 15-25 µg/m³ (visual estimate only, not measured)"\n' +
+    '  },\n' +
+    '  "exposure_note": "How the ' + exposureDays + '-day exposure affects interpretation",\n' +
+    '  "lab_tests": {\n' +
+    '    "priority_test": "ICP-MS|SEM-EDX|XRF|GC-MS|Gravimetric",\n' +
+    '    "priority_reason": "Why this test first",\n' +
+    '    "additional_tests": ["SEM-EDX", "XRF"],\n' +
+    '    "urgency": "Routine|Recommended|Urgent"\n' +
+    '  },\n' +
+    '  "likely_pollutants": ["PM2.5", "Carbon particles", "Road dust"],\n' +
+    '  "site_context_correlation": "How site type and conditions support findings",\n' +
+    '  "limitations": "Honest statement of what limits this assessment",\n' +
+    '  "recommendations": "Practical next steps"\n' +
+    '}';
 }
 
 async function callClaudeAPI(prompt) {
@@ -965,140 +1114,268 @@ function animateProgress() {
   }, 1800);
 }
 
+
+
+// ─── DEPOSIT COLOR HTML (Stojanowska 2022 · Muzamil 2024) ───
+function buildColorHTML(dc) {
+  if (!dc) return '';
+  const colorMap = {
+    'black':      { hex: '#1a1a1a', label: 'Black/Dark grey', source: 'Soot / Diesel / Traffic' },
+    'red-brown':  { hex: '#8B3A3A', label: 'Red-brown / Rust', source: 'Iron oxide / Industrial' },
+    'white-grey': { hex: '#b0b8b8', label: 'White / Light grey', source: 'Cement / Road dust / Crustal' },
+    'yellow':     { hex: '#d4a017', label: 'Yellow', source: 'Pollen — NOT a pollutant' },
+    'mixed':      { hex: '#6b7585', label: 'Mixed colours', source: 'Multiple sources' }
+  };
+  const detected = dc.colors_detected || [dc.dominant_color || 'mixed'];
+  const chips = detected.map(function(c) {
+    const info = colorMap[c] || { hex: '#888', label: c, source: '' };
+    const isDom = (c === dc.dominant_color);
+    return '<div class="color-chip' + (isDom ? ' dominant' : ' detected') + '">' +
+      '<div class="color-dot" style="background:' + info.hex + ';border:1px solid rgba(0,0,0,0.1)"></div>' +
+      '<span class="color-chip-label">' + info.label + '</span>' +
+      '<span class="color-chip-source">— ' + info.source + '</span>' +
+      (isDom ? ' <span style="font-size:9px;background:var(--teal);color:white;padding:1px 5px;border-radius:6px;margin-left:4px;">DOMINANT</span>' : '') +
+      '</div>';
+  }).join('');
+  const pollenNote = dc.pollen_present ? '<div style="margin-top:8px;font-size:11px;color:#d4a017;"><strong>⚠ Pollen detected</strong> — yellow deposits excluded from pollution scoring per Stojanowska 2022.</div>' : '';
+  return '<div class="result-section">' +
+    '<h4>Deposit Colour Classification <span style="font-size:9px;font-weight:400;color:#aaa;letter-spacing:0;text-transform:none;">Stojanowska 2022 · Muzamil 2024</span></h4>' +
+    '<div class="color-key-grid">' + chips + '</div>' +
+    pollenNote +
+    '<div style="margin-top:8px;font-size:12px;color:#556;line-height:1.6;">' + (dc.color_interpretation || '') + '</div>' +
+    '</div>';
+}
+
+// ─── SOURCE FINGERPRINT HTML (Muzamil 2024 PCA clusters) ───
+function buildSourceHTML(sf) {
+  if (!sf) return '';
+  const icons = { traffic:'🚗', industrial:'🏭', construction:'🏗️', agricultural:'🌾', mixed:'🔀', unknown:'❓', none:'—' };
+  const primary = sf.primary_source || 'unknown';
+  const secondary = sf.secondary_source || 'none';
+  const confColor = { Low:'#aaa', Medium:'#d4801a', High:'#1a8a4a' }[sf.source_confidence] || '#aaa';
+  return '<div class="result-section">' +
+    '<h4>Pollutant Source Fingerprinting <span style="font-size:9px;font-weight:400;color:#aaa;letter-spacing:0;text-transform:none;">Muzamil 2024 PCA clusters</span></h4>' +
+    '<div class="source-grid">' +
+      '<div class="source-badge primary">' + (icons[primary]||'●') + ' Primary: ' + primary.charAt(0).toUpperCase()+primary.slice(1) + '</div>' +
+      (secondary && secondary !== 'none' ? '<div class="source-badge secondary">' + (icons[secondary]||'●') + ' Secondary: ' + secondary.charAt(0).toUpperCase()+secondary.slice(1) + '</div>' : '') +
+    '</div>' +
+    '<div class="source-confidence" style="color:' + confColor + ';margin-top:6px;font-size:12px;font-weight:600;">Source confidence: ' + (sf.source_confidence||'Low') + '</div>' +
+    '<div style="font-size:12px;color:#556;margin-top:6px;line-height:1.6;">' + (sf.fingerprint_reasoning||'') + '</div>' +
+    '</div>';
+}
+
+// ─── WEB STRUCTURAL INTEGRITY HTML (Su et al. 2018 · Stojanowska 2022) ───
+function buildIntegrityHTML(wi) {
+  if (!wi) return '';
+  const score = Math.min(100, Math.max(0, Number(wi.score_pct)||0));
+  const gradeColor = score >= 80 ? '#1a8a4a' : score >= 60 ? '#d4801a' : '#c0392b';
+  const barColor = score >= 80 ? 'linear-gradient(90deg,#1a8a4a,#27ae60)' : score >= 60 ? 'linear-gradient(90deg,#d4801a,#f39c12)' : 'linear-gradient(90deg,#c0392b,#e74c3c)';
+  return '<div class="result-section">' +
+    '<h4>Web Structural Integrity <span style="font-size:9px;font-weight:400;color:#aaa;letter-spacing:0;text-transform:none;">Su et al. 2018 · Stojanowska 2022</span></h4>' +
+    '<div class="integrity-meter">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">' +
+        '<span style="font-size:12px;color:#667;">Integrity Score</span>' +
+        '<span style="font-size:18px;font-weight:800;color:' + gradeColor + ';">' + score + '%</span>' +
+        '<span style="font-size:12px;font-weight:600;color:' + gradeColor + ';">— ' + (wi.grade||'') + '</span>' +
+      '</div>' +
+      '<div class="integrity-track"><div class="integrity-fill" style="width:' + score + '%;background:' + barColor + ';">' + (score > 20 ? score+'%' : '') + '</div></div>' +
+    '</div>' +
+    '<div class="integrity-observations">' + (wi.observations||'') + '<br><em>' + (wi.pollution_impact||'') + '</em></div>' +
+    '</div>';
+}
+
+// ─── WHO AQG TIER HTML (WHO 2021 · Alotaibi 2024) ───
+function buildWHOHTML(who, pollLevel) {
+  if (!who) return '';
+  const tiers = [
+    { name:'AQG Level',       pm25:'≤5',   label:'Meets WHO AQG',   cls:'who-tier-1' },
+    { name:'Interim Target 1',pm25:'≤35',  label:'Elevated risk',   cls:'who-tier-2' },
+    { name:'Interim Target 2',pm25:'≤25',  label:'Moderate risk',   cls:'who-tier-2' },
+    { name:'Interim Target 3',pm25:'≤15',  label:'High risk',       cls:'who-tier-3' },
+    { name:'Interim Target 4',pm25:'≤10',  label:'Very high risk',  cls:'who-tier-4' }
+  ];
+  const currentTier = who.tier || '';
+  const rows = tiers.map(function(t) {
+    const isMatch = currentTier.includes(t.name) || (currentTier === 'AQG Level' && t.name === 'AQG Level');
+    return '<tr' + (isMatch ? ' class="highlight"' : '') + '>' +
+      '<td>' + t.name + (isMatch ? ' ◀ <strong>estimated match</strong>' : '') + '</td>' +
+      '<td>' + t.pm25 + ' µg/m³</td>' +
+      '<td><span class="who-tier-badge ' + t.cls + '">' + t.label + '</span></td>' +
+      '</tr>';
+  }).join('');
+  return '<div class="result-section">' +
+    '<h4>WHO AQG Tier Comparison <span style="font-size:9px;font-weight:400;color:#aaa;letter-spacing:0;text-transform:none;">WHO Global AQG 2021 · Alotaibi 2024</span></h4>' +
+    '<table class="who-table"><thead><tr><th>Tier</th><th>PM2.5 Annual</th><th>Risk Level</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+    '<div style="font-size:11px;color:#aaa;margin-top:6px;">Estimated range: <strong>' + (who.pm25_range_estimate||'—') + '</strong> &nbsp;|&nbsp; ' + (who.tier_reasoning||'') + '</div>' +
+    '<div style="font-size:10px;color:#bbb;margin-top:4px;">⚠ Visual estimate only — not a calibrated measurement. Confirm with certified monitoring.</div>' +
+    '</div>';
+}
+
+// ─── LAB TEST GUIDE HTML (Stojanowska 2022 methods table) ───
+function buildLabHTML(lab) {
+  if (!lab) return '';
+  const tests = {
+    'ICP-MS':       { icon:'🔬', desc:'Inductively Coupled Plasma Mass Spectrometry — gold standard for heavy metals (Pb, Cd, Zn, Cu, Ni, Cr, As, Hg)' },
+    'SEM-EDX':      { icon:'🖥️', desc:'Scanning Electron Microscopy with Energy Dispersive X-ray — particle morphology + elemental composition' },
+    'XRF':          { icon:'⚡', desc:'X-ray Fluorescence — rapid multi-element screening, non-destructive' },
+    'GC-MS':        { icon:'🧪', desc:'Gas Chromatography-Mass Spectrometry — PAH and organic pollutant identification' },
+    'Gravimetric':  { icon:'⚖️', desc:'Filter weighing — total PM mass determination, simplest method' }
+  };
+  const urgencyColor = { Routine:'#aaa', Recommended:'#d4801a', Urgent:'#c0392b' };
+  const priority = lab.priority_test || 'ICP-MS';
+  const additional = lab.additional_tests || [];
+  const allTests = [priority].concat(additional.filter(function(t){ return t !== priority; }));
+  const rows = allTests.map(function(t, i) {
+    const info = tests[t] || { icon:'🔬', desc:t };
+    const isFirst = i === 0;
+    const badge = isFirst ? ('<span class="lab-badge must">PRIORITY</span>') : '<span class="lab-badge optional">ADDITIONAL</span>';
+    return '<div class="lab-row' + (isFirst ? ' recommended' : '') + '">' +
+      '<div class="lab-icon">' + info.icon + '</div>' +
+      '<div><div class="lab-name">' + t + '</div><div class="lab-desc">' + info.desc + '</div>' +
+      (isFirst ? '<div style="font-size:11px;color:#556;margin-top:3px;">' + (lab.priority_reason||'') + '</div>' : '') +
+      '</div>' + badge + '</div>';
+  }).join('');
+  return '<div class="result-section">' +
+    '<h4>Conditional Lab Test Guide <span style="font-size:9px;font-weight:400;color:#aaa;letter-spacing:0;text-transform:none;">Stojanowska 2022 methods table</span></h4>' +
+    '<div style="margin-bottom:8px;"><span style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;background:' + (urgencyColor[lab.urgency]||'#aaa') + ';color:white;">' + (lab.urgency||'Routine') + '</span></div>' +
+    '<div class="lab-grid">' + rows + '</div>' +
+    '</div>';
+}
+
+// ─── EXPOSURE NOTE HTML (Stojanowska 2022 Table 2) ───
+function buildExposureHTML(note, days) {
+  if (!note) return '';
+  return '<div class="result-section">' +
+    '<h4>Exposure Duration Assessment <span style="font-size:9px;font-weight:400;color:#aaa;letter-spacing:0;text-transform:none;">Stojanowska 2022 Table 2</span></h4>' +
+    '<div class="exposure-rate"><strong>' + days + ' days</strong> — ' + note + '</div>' +
+    '</div>';
+}
+
+// ─── LITERATURE PANEL ───
+function buildLiteratureHTML() {
+  const refs = [
+    { year:'2022', ref:'Stojanowska et al. — Integr Environ Assess Manag', relevance:'Spider webs as validated passive samplers; exposure duration table; lab methods comparison (ICP-MS, SEM-EDX, XRF)' },
+    { year:'2024', ref:'Muzamil et al. — Water Air Soil Pollut', relevance:'Heavy metal spatial distribution in urban spider webs; PCA source clusters (traffic, construction, landfill)' },
+    { year:'2018', ref:'Górka et al. — Environ Sci Pollut Res', relevance:'Fine/coarse particle differential accumulation on spider silk fibres' },
+    { year:'2021', ref:'Bartz et al. — Sci Total Environ', relevance:'PM2.5 vs PM10 visual distinction on silk; particle size–source correlation' },
+    { year:'2018', ref:'Su et al. — J R Soc Interface (MIT)', relevance:'3D spider web structural imaging; web geometry integrity scoring' },
+    { year:'2024', ref:'Alotaibi & Nassif — Discover AI', relevance:'AI/ML in environmental monitoring; WHO AQG tier contextualisation' },
+    { year:'2021', ref:'WHO Global Air Quality Guidelines', relevance:'PM2.5 annual AQG (5 µg/m³) and Interim Targets 1–4 used for tier classification' }
+  ];
+  const items = refs.map(function(r) {
+    return '<div class="lit-item">' +
+      '<div class="lit-year">' + r.year + '</div>' +
+      '<div><div class="lit-ref">' + r.ref + '</div><div class="lit-relevance">' + r.relevance + '</div></div>' +
+      '</div>';
+  }).join('');
+  return '<div class="result-section">' +
+    '<h4>Scientific Literature Basis</h4>' +
+    '<div class="lit-panel">' + items + '</div>' +
+    '</div>';
+}
+
+// ─── FINE/COARSE RATIO HTML (Górka et al. 2018 · Bartz et al. 2021) ───
+function buildRatioHTML(pf) {
+  if (!pf || typeof pf.fine_pct === 'undefined') return '';
+  const fine   = Math.min(100, Math.max(0, Math.round(pf.fine_pct   || 0)));
+  const coarse = Math.min(100, Math.max(0, Math.round(pf.coarse_pct || 0)));
+  const uf     = Math.min(100, Math.max(0, Math.round(pf.ultrafine_pct || 0)));
+  const domLabels = { fine:'Fine (PM2.5)', coarse:'Coarse (PM10)', ultrafine:'Ultrafine (<0.1µm)', mixed:'Mixed fractions' };
+  const domColors = { fine:'#c0392b', coarse:'#d4801a', ultrafine:'#7b0000', mixed:'#0d6e6e' };
+  const dom = pf.dominant_fraction || 'mixed';
+  return '<div class="result-section ratio-section">' +
+    '<h4>Fine / Coarse Particle Ratio <span style="font-size:9px;font-weight:400;color:#aaa;letter-spacing:0;text-transform:none;">Górka et al. 2018 · Bartz et al. 2021</span></h4>' +
+    '<div class="ratio-bars">' +
+      '<div class="ratio-row"><span class="ratio-label">Fine PM2.5</span><div class="ratio-track"><div class="ratio-fill fine" style="width:' + fine + '%"></div></div><span class="ratio-pct">' + fine + '%</span></div>' +
+      '<div class="ratio-row"><span class="ratio-label">Coarse PM10</span><div class="ratio-track"><div class="ratio-fill coarse" style="width:' + coarse + '%"></div></div><span class="ratio-pct">' + coarse + '%</span></div>' +
+      '<div class="ratio-row"><span class="ratio-label">Ultrafine</span><div class="ratio-track"><div class="ratio-fill ultrafine" style="width:' + uf + '%"></div></div><span class="ratio-pct">' + uf + '%</span></div>' +
+    '</div>' +
+    '<div class="ratio-verdict"><strong>Dominant fraction: <span style="color:' + (domColors[dom]||'#0d6e6e') + '">' + (domLabels[dom]||dom) + '</span></strong><br>' + (pf.health_implication||'') + '</div>' +
+    '<div class="ratio-meta"><strong>Fine evidence:</strong> ' + (pf.fine_evidence||'—') + '<br><strong>Coarse evidence:</strong> ' + (pf.coarse_evidence||'—') + '<br><strong>Ultrafine evidence:</strong> ' + (pf.ultrafine_evidence||'—') + '</div>' +
+    '</div>';
+}
+
 // ─── RESULTS ───
 function showResults(data, meta) {
   goToStep(4);
 
-  // Ensure new field exists (graceful fallback for old responses)
-  if (!data.particle_size_fractions) {
-    data.particle_size_fractions = { ultrafine_pct: 0, fine_pct: 0, coarse_pct: 0, basis: 'Particle size fraction data not available for this analysis.' };
-  }
-
   const levelClass = {
-    'Low': 'poll-low', 'Moderate': 'poll-moderate',
-    'High': 'poll-high', 'Severe': 'poll-severe'
+    'Low':'poll-low','Moderate':'poll-moderate','High':'poll-high','Severe':'poll-severe'
   }[data.pollution_level] || 'poll-unknown';
 
   const levelIcon = {
-    'Low': '🟢', 'Moderate': '🟡', 'High': '🔴', 'Severe': '🔴'
+    'Low':'🟢','Moderate':'🟡','High':'🟠','Severe':'🔴'
   }[data.pollution_level] || '⚪';
 
   const pollutantTags = (data.likely_pollutants || [])
-    .map(p => `<span class="pollutant-tag">${p}</span>`).join('');
+    .map(function(p){ return '<span class="pollutant-tag">' + p + '</span>'; }).join('');
 
-  const confPct = Math.min(100, Math.max(0, data.confidence_pct || (data.confidence === 'High' ? 75 : data.confidence === 'Medium' ? 50 : 25)));
+  const confPct = Math.min(100, Math.max(0,
+    data.confidence_pct || (data.confidence==='High'?75:data.confidence==='Medium'?50:25)
+  ));
 
   const imgSrc = document.getElementById('previewImg').src;
+  const webTypeSel = document.getElementById('webType');
+  const expDays = document.getElementById('exposureDays').value || 'unknown';
+  const webTypeLabel = webTypeSel ? webTypeSel.options[webTypeSel.selectedIndex].text : '';
 
-  // ── Particle ratio values ──
-  const psf = data.particle_size_fractions;
-  const uf = Math.round(Math.max(0, psf.ultrafine_pct || 0));
-  const fi = Math.round(Math.max(0, psf.fine_pct || 0));
-  const co = Math.round(Math.max(0, psf.coarse_pct || 0));
-  const total = uf + fi + co;
-  // Normalise to 100 if AI gave non-100 sum
-  const ufN = total > 0 ? Math.round(uf * 100 / total) : 0;
-  const fiN = total > 0 ? Math.round(fi * 100 / total) : 0;
-  const coN = total > 0 ? (100 - ufN - fiN) : 0;
-  const hasRatio = total > 0;
+  document.getElementById('resultsContent').innerHTML =
+    '<div class="result-header">' +
+      '<img src="' + imgSrc + '" class="result-img" alt="Analyzed web">' +
+      '<div class="result-title">' +
+        '<div style="font-size:11px;color:#aaa;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Assessment Complete · ' + meta.city + '</div>' +
+        '<h2>' + meta.siteType.charAt(0).toUpperCase() + meta.siteType.slice(1) + ' Site Analysis</h2>' +
+        '<span class="poll-badge ' + levelClass + '">' + levelIcon + ' ' + data.pollution_level + ' Pollution</span>' +
+        (data.who_aqg ? '<div style="margin-top:6px;font-size:11px;color:#889;">WHO Tier: <strong>' + data.who_aqg.tier + '</strong></div>' : '') +
+      '</div>' +
+    '</div>' +
 
-  const ratioPanel = hasRatio ? `
-    <div class="result-section">
-      <h4>Particle Size Fraction Estimate <span class="lit-badge">Bartz et al. 2021 · Górka et al. 2018</span></h4>
-      <p style="font-size:12px; color:#889; margin-bottom:12px; line-height:1.55;">
-        Visual morphology of silk thread deposits used to infer PM fraction dominance.
-        Uniform dark coating → fine/ultrafine; visible granules/clumps → coarse.
-        <em>Qualitative estimate only — not a calibrated measurement.</em>
-      </p>
-      <div class="ratio-bar-track">
-        <div class="ratio-seg ultrafine" style="width:${ufN}%">${ufN > 8 ? ufN + '%' : ''}</div>
-        <div class="ratio-seg fine"      style="width:${fiN}%">${fiN > 8 ? fiN + '%' : ''}</div>
-        <div class="ratio-seg coarse"    style="width:${coN}%">${coN > 8 ? coN + '%' : ''}</div>
-      </div>
-      <div class="ratio-legend">
-        <div class="ratio-legend-item">
-          <div class="ratio-swatch" style="background:#6b3fa0;"></div>
-          Ultrafine &lt;PM₁ &nbsp;<strong>${ufN}%</strong>
-        </div>
-        <div class="ratio-legend-item">
-          <div class="ratio-swatch" style="background:#0d6e6e;"></div>
-          Fine PM₂.₅ &nbsp;<strong>${fiN}%</strong>
-        </div>
-        <div class="ratio-legend-item">
-          <div class="ratio-swatch" style="background:#c17f3b;"></div>
-          Coarse PM₁₀ &nbsp;<strong>${coN}%</strong>
-        </div>
-      </div>
-      <div class="ratio-basis">${psf.basis || '—'}</div>
-    </div>` : '';
+    '<div class="result-section"><h4>AI Summary</h4><div class="result-text"><p>' + (data.summary||'—') + '</p></div></div>' +
 
-  document.getElementById('resultsContent').innerHTML = `
-    <div class="result-header">
-      <img src="${imgSrc}" class="result-img" alt="Analyzed web">
-      <div class="result-title">
-        <div style="font-size:11px; color:#aaa; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Assessment Complete · ${meta.city}</div>
-        <h2>${meta.siteType.charAt(0).toUpperCase() + meta.siteType.slice(1)} Site Analysis</h2>
-        <span class="poll-badge ${levelClass}">${levelIcon} ${data.pollution_level} Pollution</span>
-      </div>
-    </div>
+    '<div class="result-section"><h4>Visual Evidence on Silk Threads</h4><div class="result-text"><p>' + (data.visual_evidence||'—') + '</p></div></div>' +
 
-    <div class="result-section">
-      <h4>AI Summary</h4>
-      <div class="result-text"><p>${data.summary || '—'}</p></div>
-    </div>
+    '<div class="result-section"><h4>Deposit Analysis</h4><div class="result-text"><p>' + (data.deposit_analysis||'—') + '</p></div></div>' +
 
-    <div class="result-section">
-      <h4>Visual Evidence on Silk Threads</h4>
-      <div class="result-text"><p>${data.visual_evidence || '—'}</p></div>
-    </div>
+    buildColorHTML(data.deposit_colors) +
 
-    <div class="result-section">
-      <h4>Deposit Analysis</h4>
-      <div class="result-text"><p>${data.deposit_analysis || '—'}</p></div>
-    </div>
+    buildRatioHTML(data.particle_fractions) +
 
-    ${ratioPanel}
+    buildSourceHTML(data.source_fingerprint) +
 
-    <div class="result-section">
-      <h4>Likely Pollutant Categories</h4>
-      <div class="pollutants-grid">${pollutantTags || '<span style="color:#aaa; font-size:13px;">Could not determine from image</span>'}</div>
-    </div>
+    buildIntegrityHTML(data.web_integrity) +
 
-    <div class="result-section">
-      <h4>Site Context Correlation</h4>
-      <div class="result-text"><p>${data.site_context_correlation || '—'}</p></div>
-    </div>
+    buildWHOHTML(data.who_aqg, data.pollution_level) +
 
-    <div class="result-section">
-      <h4>Assessment Confidence</h4>
-      <div class="confidence-bar-wrap">
-        <div class="conf-row">
-          <span class="conf-label">${data.confidence || '—'} Confidence</span>
-          <div class="conf-bar"><div class="conf-fill" style="width:${confPct}%"></div></div>
-          <span class="conf-val">${confPct}%</span>
-        </div>
-      </div>
-    </div>
+    buildExposureHTML(data.exposure_note, expDays) +
 
-    <div class="result-section">
-      <h4>Limitations of This Assessment</h4>
-      <div class="limitations-box"><p>${data.limitations || '—'}</p></div>
-    </div>
+    buildLabHTML(data.lab_tests) +
 
-    <div class="result-section">
-      <h4>Recommendations</h4>
-      <div class="result-text"><p>${data.recommendations || '—'}</p></div>
-    </div>
+    '<div class="result-section"><h4>Likely Pollutant Categories</h4>' +
+      '<div class="pollutants-grid">' + (pollutantTags || '<span style="color:#aaa;font-size:13px;">Could not determine from image</span>') + '</div>' +
+    '</div>' +
 
-    <div class="disclaimer">
-      <strong>⚠️ Screening Tool Disclaimer:</strong> SilkSense provides a qualitative, AI-assisted screening assessment based on visual analysis of spider web images. It is NOT a substitute for laboratory analysis (ICP-MS, SEM-EDX, XRF) or certified air quality monitoring equipment. Results should be used for preliminary screening and research purposes only. Pollution classification is based on visual indicators and site context, not calibrated measurements.
-    </div>
+    '<div class="result-section"><h4>Site Context Correlation</h4><div class="result-text"><p>' + (data.site_context_correlation||'—') + '</p></div></div>' +
 
-    <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
-      <button class="btn btn-ghost" onclick="startOver()">← New Analysis</button>
-      <button class="btn btn-primary" onclick="downloadPDFReport()">⬇ Download PDF Report</button>
-    </div>
-  `;
+    '<div class="result-section"><h4>Assessment Confidence</h4>' +
+      '<div class="confidence-bar-wrap"><div class="conf-row">' +
+        '<span class="conf-label">' + (data.confidence||'—') + ' Confidence</span>' +
+        '<div class="conf-bar"><div class="conf-fill" style="width:' + confPct + '%"></div></div>' +
+        '<span class="conf-val">' + confPct + '%</span>' +
+      '</div></div>' +
+    '</div>' +
+
+    '<div class="result-section"><h4>Limitations</h4><div class="limitations-box"><p>' + (data.limitations||'—') + '</p></div></div>' +
+
+    '<div class="result-section"><h4>Recommendations</h4><div class="result-text"><p>' + (data.recommendations||'—') + '</p></div></div>' +
+
+    buildLiteratureHTML() +
+
+    '<div class="disclaimer"><strong>⚠️ Screening Tool Disclaimer:</strong> SilkSense provides a qualitative, AI-assisted screening assessment. It is NOT a substitute for laboratory analysis (ICP-MS, SEM-EDX, XRF) or certified monitoring. Results are for preliminary screening and research only.</div>' +
+
+    '<div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap;">' +
+      '<button class="btn btn-ghost" onclick="startOver()">← New Analysis</button>' +
+      '<button class="btn btn-primary" onclick="downloadPDFReport()">⬇ Download PDF Report</button>' +
+    '</div>';
 }
 
 function showAPIError(msg) {
@@ -1127,7 +1404,9 @@ function saveKeyAndRetry() {
     weather: document.getElementById('weather').value,
     season: document.getElementById('season').value,
     background: document.getElementById('background').value,
-    observations: document.getElementById('observations').value
+    observations: document.getElementById('observations').value,
+    webType: document.getElementById('webType').value,
+    exposureDays: document.getElementById('exposureDays').value || 'unknown'
   });
   callClaudeAPI(prompt)
     .then(r => showResults(r, { siteType, city }))
@@ -1144,113 +1423,172 @@ function downloadPDFReport() {
   const contentW = pageW - margin * 2;
   let y = 20;
 
-  function addLine(text, size, style, color, indent) {
-    doc.setFontSize(size || 11);
+  function checkPage() { if (y > 268) { doc.addPage(); y = 18; } }
+
+  function addText(text, size, style, color, indent) {
+    doc.setFontSize(size || 10);
     doc.setFont('helvetica', style || 'normal');
-    doc.setTextColor(...(color || [30, 40, 40]));
-    const lines = doc.splitTextToSize(text, contentW - (indent || 0));
+    doc.setTextColor(...(color || [40, 50, 50]));
+    const lines = doc.splitTextToSize(String(text || ''), contentW - (indent || 0));
     doc.text(lines, margin + (indent || 0), y);
-    y += lines.length * (size || 11) * 0.45 + 3;
-    if (y > 270) { doc.addPage(); y = 20; }
+    y += lines.length * (size || 10) * 0.42 + 2.5;
+    checkPage();
   }
 
-  function addSectionTitle(title) {
-    y += 3;
+  function addSection(title, lit) {
+    y += 3; checkPage();
     doc.setFillColor(13, 110, 110);
     doc.roundedRect(margin, y - 4, contentW, 8, 1, 1, 'F');
-    doc.setFontSize(10); doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9); doc.setFont('helvetica', 'bold');
     doc.setTextColor(255, 255, 255);
     doc.text(title.toUpperCase(), margin + 3, y + 1.5);
-    y += 10;
-    doc.setTextColor(30, 40, 40);
+    if (lit) { doc.setFontSize(7); doc.setFont('helvetica', 'normal'); doc.text(lit, pageW - margin - 3, y + 1.5, { align:'right' }); }
+    y += 11; doc.setTextColor(40, 50, 50);
+  }
+
+  function addKV(key, val, color) {
+    doc.setFontSize(9); doc.setFont('helvetica', 'bold'); doc.setTextColor(13, 110, 110);
+    doc.text(key + ':', margin, y);
+    doc.setFont('helvetica', 'normal'); doc.setTextColor(...(color || [40, 50, 50]));
+    const lines = doc.splitTextToSize(String(val || '—'), contentW - 28);
+    doc.text(lines, margin + 28, y);
+    y += lines.length * 4 + 1.5; checkPage();
+  }
+
+  function addBar(label, pct, r, g, b) {
+    doc.setFontSize(8); doc.setFont('helvetica', 'normal'); doc.setTextColor(80, 90, 90);
+    doc.text(label, margin, y + 2.5);
+    doc.setFillColor(230, 240, 240);
+    doc.roundedRect(margin + 30, y, contentW - 35, 5, 1, 1, 'F');
+    const w = Math.max(0, Math.min(contentW - 35, (contentW - 35) * pct / 100));
+    if (w > 0) { doc.setFillColor(r, g, b); doc.roundedRect(margin + 30, y, w, 5, 1, 1, 'F'); }
+    doc.setFontSize(7); doc.setTextColor(13, 110, 110); doc.text(pct + '%', margin + contentW - 3, y + 3.5, { align:'right' });
+    y += 7; checkPage();
   }
 
   function addDivider() {
-    doc.setDrawColor(13, 110, 110, 30);
-    doc.setLineWidth(0.3);
-    doc.line(margin, y, margin + contentW, y);
-    y += 4;
+    doc.setDrawColor(200, 220, 220); doc.setLineWidth(0.3);
+    doc.line(margin, y, margin + contentW, y); y += 4;
   }
 
-  // Header
+  // ─── HEADER ───
   doc.setFillColor(13, 110, 110);
-  doc.rect(0, 0, pageW, 32, 'F');
-  doc.setFontSize(22); doc.setFont('helvetica', 'bold');
-  doc.setTextColor(255, 255, 255);
+  doc.rect(0, 0, pageW, 34, 'F');
+  doc.setFontSize(22); doc.setFont('helvetica', 'bold'); doc.setTextColor(255, 255, 255);
   doc.text('SilkSense', margin, 14);
   doc.setFontSize(10); doc.setFont('helvetica', 'normal');
   doc.text('Spider Web Air Quality Assessment Report', margin, 22);
-  doc.setFontSize(9);
-  doc.text('Generated: ' + new Date().toLocaleString(), margin, 29);
-  y = 40;
+  doc.setFontSize(8); doc.text('Generated: ' + new Date().toLocaleString(), margin, 29);
+  doc.setFontSize(8); doc.text('Powered by Google Gemini 2.5 Flash · Rajalakshmi Engineering College', pageW - margin, 29, { align:'right' });
+  y = 42;
 
-  // Grab result content
   const rc = document.getElementById('resultsContent');
-  if (!rc) { alert('No results to export yet.'); return; }
+  if (!rc) { alert('No results to export.'); return; }
 
-  // Site info from header
-  const siteTag = rc.querySelector('[style*="uppercase"]');
-  const siteLabel = rc.querySelector('h2');
+  // ─── SITE SUMMARY ───
+  const siteEl = rc.querySelector('[style*="uppercase"]');
+  const h2El   = rc.querySelector('h2');
   const badgeEl = rc.querySelector('.poll-badge');
-
-  if (siteTag) addLine(siteTag.textContent.trim(), 9, 'normal', [100, 120, 120]);
-  if (siteLabel) addLine(siteLabel.textContent.trim(), 15, 'bold', [13, 110, 110]);
-  if (badgeEl) addLine('Pollution Level: ' + badgeEl.textContent.trim(), 12, 'bold', [30, 40, 40]);
+  const whoDiv = rc.querySelector('[style*="WHO Tier"]');
+  if (siteEl) addText(siteEl.textContent.trim(), 8, 'normal', [120, 140, 140]);
+  if (h2El)   addText(h2El.textContent.trim(), 15, 'bold', [13, 110, 110]);
+  if (badgeEl) addText('Pollution Level: ' + badgeEl.textContent.trim(), 11, 'bold', [40, 50, 50]);
+  if (whoDiv)  addText(whoDiv.textContent.trim(), 9, 'normal', [100, 120, 120]);
   addDivider();
 
-  // Sections — iterate all result-sections
+  // ─── ALL RESULT SECTIONS ───
   const sections = rc.querySelectorAll('.result-section');
-  sections.forEach(sec => {
-    const title = sec.querySelector('h4');
-    if (!title) return;
-    const titleText = title.textContent.replace(/[^\x20-\x7E]/g, '').trim(); // strip emoji/badges
+  sections.forEach(function(sec) {
+    const h4 = sec.querySelector('h4');
+    if (!h4) return;
+    const title = h4.childNodes[0] ? h4.childNodes[0].textContent.trim() : h4.textContent.trim();
+    const litSpan = h4.querySelector('span');
+    const lit = litSpan ? litSpan.textContent.trim() : '';
 
-    // Special handling for particle ratio panel
-    const ratioBar = sec.querySelector('.ratio-bar-track');
-    if (ratioBar) {
-      addSectionTitle('Particle Size Fraction Estimate');
-      addLine('Literature basis: Bartz et al. (2021) Aerosol Sci; Górka et al. (2018); Stojanowska et al. (2022)', 8, 'italic', [100, 130, 130]);
-      // Draw coloured bar in PDF
-      const ufSeg = sec.querySelector('.ratio-seg.ultrafine');
-      const fiSeg = sec.querySelector('.ratio-seg.fine');
-      const coSeg = sec.querySelector('.ratio-seg.coarse');
-      const ufW = ufSeg ? parseFloat(ufSeg.style.width) : 0;
-      const fiW = fiSeg ? parseFloat(fiSeg.style.width) : 0;
-      const coW = coSeg ? parseFloat(coSeg.style.width) : 0;
-      const barH = 8; const barY = y; const barTotal = contentW;
-      if (ufW > 0) { doc.setFillColor(107, 63, 160); doc.roundedRect(margin, barY, barTotal * ufW / 100, barH, 1, 1, 'F'); }
-      if (fiW > 0) { doc.setFillColor(13, 110, 110); doc.roundedRect(margin + barTotal * ufW / 100, barY, barTotal * fiW / 100, barH, 1, 1, 'F'); }
-      if (coW > 0) { doc.setFillColor(193, 127, 59); doc.roundedRect(margin + barTotal * (ufW + fiW) / 100, barY, barTotal * coW / 100, barH, 1, 1, 'F'); }
-      y += barH + 6;
-      // Legend
-      const legendItems = sec.querySelectorAll('.ratio-legend-item');
-      let legendText = Array.from(legendItems).map(li => li.textContent.replace(/\s+/g, ' ').trim()).join('   ');
-      addLine(legendText, 9, 'normal', [50, 60, 65]);
-      // Basis text
-      const basisEl = sec.querySelector('.ratio-basis');
-      if (basisEl) addLine(basisEl.textContent.replace(/\s+/g, ' ').trim(), 9, 'italic', [100, 110, 110]);
-      y += 2;
+    // Fine/coarse ratio bars
+    if (sec.classList.contains('ratio-section')) {
+      addSection(title, lit);
+      const rows = sec.querySelectorAll('.ratio-row');
+      rows.forEach(function(row) {
+        const lbl = row.querySelector('.ratio-label');
+        const pct = row.querySelector('.ratio-pct');
+        const fill = row.querySelector('.ratio-fill');
+        if (!lbl || !pct) return;
+        const pctVal = parseInt(pct.textContent) || 0;
+        const isFine = fill && fill.classList.contains('fine');
+        const isCoarse = fill && fill.classList.contains('coarse');
+        var rb=isFine?192:(isCoarse?212:100), gb=isFine?57:(isCoarse?128:0), bb=isFine?43:(isCoarse?26:0); addBar(lbl.textContent.trim(), pctVal, rb, gb, bb);
+      });
+      const verdict = sec.querySelector('.ratio-verdict');
+      if (verdict) addText(verdict.textContent.replace(/\s+/g,' ').trim(), 9, 'italic', [80, 90, 90]);
+      const meta = sec.querySelector('.ratio-meta');
+      if (meta) addText(meta.textContent.replace(/\s+/g,' ').trim(), 8, 'normal', [120, 130, 130]);
       return;
     }
 
-    const body = sec.querySelector('.result-text, .limitations-box, .confidence-bar-wrap, .pollutants-grid');
-    const bodyText = body ? body.textContent.replace(/\s+/g, ' ').trim() : '';
+    // WHO table
+    const whoTable = sec.querySelector('.who-table');
+    if (whoTable) {
+      addSection(title, lit);
+      const rows = whoTable.querySelectorAll('tr');
+      rows.forEach(function(row, ri) {
+        const cells = row.querySelectorAll('th, td');
+        const cellTexts = Array.from(cells).map(function(c){ return c.textContent.trim(); });
+        if (ri === 0) {
+          doc.setFontSize(8); doc.setFont('helvetica', 'bold'); doc.setFillColor(13,110,110);
+          doc.rect(margin, y-3, contentW, 6, 'F');
+          doc.setTextColor(255,255,255);
+          cellTexts.forEach(function(t,ci){ doc.text(t, margin + ci*52, y+1); });
+          y += 7;
+        } else {
+          const isHL = row.classList.contains('highlight');
+          if (isHL) { doc.setFillColor(230,245,245); doc.rect(margin,y-3,contentW,6,'F'); }
+          doc.setFontSize(8); doc.setFont('helvetica', isHL?'bold':'normal'); doc.setTextColor(40,50,50);
+          cellTexts.forEach(function(t,ci){ doc.text(t.slice(0,30), margin + ci*52, y+1); });
+          y += 6;
+        }
+        checkPage();
+      });
+      const noteEl = sec.querySelector('[style*="aaa"]');
+      if (noteEl) addText(noteEl.textContent.replace(/\s+/g,' ').trim(), 8, 'italic', [150,150,150]);
+      return;
+    }
+
+    // Lab grid
+    const labGrid = sec.querySelector('.lab-grid');
+    if (labGrid) {
+      addSection(title, lit);
+      const labRows = sec.querySelectorAll('.lab-row');
+      labRows.forEach(function(lr) {
+        const name = lr.querySelector('.lab-name');
+        const desc = lr.querySelector('.lab-desc');
+        const badge = lr.querySelector('.lab-badge');
+        const isRec = lr.classList.contains('recommended');
+        doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(isRec?13:80, isRec?110:90, isRec?110:90);
+        doc.text((name?name.textContent:'') + (badge?' ['+badge.textContent+']':''), margin+2, y);
+        y += 4;
+        if (desc) addText(desc.textContent.trim(), 8, 'normal', [100,110,110], 4);
+        y += 1; checkPage();
+      });
+      return;
+    }
+
+    // Default: text content
+    const body = sec.querySelector('.result-text p, .limitations-box p, .integrity-observations, .exposure-rate, .source-confidence, .webtype-note, .lit-panel');
+    const bodyText = body ? body.textContent.replace(/\s+/g,' ').trim() : sec.textContent.replace(title,'').replace(lit,'').replace(/\s+/g,' ').trim();
     if (!bodyText) return;
-    addSectionTitle(titleText);
-    addLine(bodyText, 10, 'normal', [50, 60, 65]);
-    y += 2;
+    addSection(title, lit);
+    addText(bodyText, 9, 'normal', [60, 70, 70]);
   });
 
   addDivider();
 
-  // Disclaimer
-  addSectionTitle('Disclaimer');
-  addLine('SilkSense provides a qualitative, AI-assisted screening assessment based on visual analysis of spider web images. It is NOT a substitute for laboratory analysis (ICP-MS, SEM-EDX, XRF) or certified air quality monitoring equipment. Results are for preliminary screening and research purposes only.', 9, 'italic', [100, 100, 100]);
-
-  // Footer on last page
-  y += 6;
-  addLine('Rajalakshmi Engineering College — AI in Chemical Engineering Project', 9, 'normal', [150, 150, 150]);
-  addLine('Team: K Karunya · S Nandhitha · S T Pragadheeshwaran | Guides: Dr. Vincent Joseph K L · Dr. Mary Rosanna N T', 8, 'normal', [170, 170, 170]);
+  // ─── FOOTER ───
+  addSection('Disclaimer');
+  addText('SilkSense provides a qualitative, AI-assisted screening assessment. NOT a substitute for laboratory analysis (ICP-MS, SEM-EDX, XRF) or certified monitoring. For research and screening only.', 8, 'italic', [120, 120, 120]);
+  y += 4;
+  addText('Team: K Karunya · S Nandhitha · S T Pragadheeshwaran', 8, 'normal', [160,160,160]);
+  addText('Guides: Dr. Vincent Joseph K L · Dr. Mary Rosanna N T · Rajalakshmi Engineering College', 8, 'normal', [160,160,160]);
 
   doc.save('SilkSense_AQ_Report_' + Date.now() + '.pdf');
 }

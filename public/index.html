@@ -398,6 +398,42 @@
   }
   .limitations-box p { font-size: 13px; color: #664400; line-height: 1.65; }
 
+  /* ─── PARTICLE RATIO PANEL ─── */
+  .ratio-bar-track {
+    display: flex; height: 32px; border-radius: 8px; overflow: hidden;
+    margin-bottom: 12px; border: 1px solid var(--border);
+  }
+  .ratio-seg {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; transition: width 1.2s ease;
+    overflow: hidden;
+  }
+  .ratio-seg.ultrafine { background: #6b3fa0; color: white; }
+  .ratio-seg.fine      { background: #0d6e6e; color: white; }
+  .ratio-seg.coarse    { background: #c17f3b; color: white; }
+  .ratio-legend {
+    display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 10px;
+  }
+  .ratio-legend-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; color: #556;
+  }
+  .ratio-swatch {
+    width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0;
+  }
+  .ratio-basis {
+    font-size: 12px; color: #889; line-height: 1.6; margin-top: 4px;
+    padding: 10px 14px; background: var(--mist); border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .lit-badge {
+    display: inline-block; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.4px; color: var(--teal);
+    background: rgba(13,110,110,0.08); border: 1px solid rgba(13,110,110,0.18);
+    padding: 2px 8px; border-radius: 10px; margin-left: 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
   .disclaimer {
     background: var(--mist); border-radius: 12px;
     padding: 16px 20px; margin-top: 24px;
@@ -859,16 +895,16 @@ INSTRUCTIONS FOR ANALYSIS:
    - Overall thread clarity (clean/slightly loaded/heavily loaded)
    - Coverage area with deposits
 
-2. If the background is cluttered, focus ONLY on what is visible ON the silk threads themselves. Ignore background elements.
+2. PARTICLE SIZE FRACTION ESTIMATION (required field — scientific basis below):
+   Estimate the proportional split between three PM fractions based on visual morphology of deposits:
+   - Ultrafine (PM1, <1 µm): Inferred from overall thread discoloration/darkening with no visible individual particles. Ultrafine particles embed in silk protein and cause uniform colour change. Source: Górka et al. (2018), Aerosol Sci — nanofibers of cribellate silk trap ultrafine particles by interception.
+   - Fine (PM2.5, 1–2.5 µm): Uniform dark or grey film/coating visible on threads without distinct clumps. Fine particles adhere by electrostatic and van der Waals forces. Source: Bartz et al. (2021) — 92–97% of particles collected on webs during 40-day exposure were <10 µm, with fine fraction dominant.
+   - Coarse (PM10, 2.5–10 µm): Visible specks, granules, or irregular clumps on silk. Coarser particles settle by gravitational impaction. Source: Stojanowska et al. (2022), Integr Environ Assess Manag — coarse fraction less abundant, more site-specific.
+   Your three percentages must sum to 100. Be honest if image quality limits this assessment. Express uncertainty in the "basis" field. These are QUALITATIVE VISUAL ESTIMATES, not measurements.
 
-3. Be HONEST about image quality — if you cannot clearly see the web or make a confident assessment, say so and explain why.
+3. If the background is cluttered, focus ONLY on what is visible ON the silk threads themselves. Ignore background elements.
 
-4. Based on your visual analysis COMBINED with the site context, provide:
-   - Pollution Level: ONE of: Low / Moderate / High / Severe / Insufficient Image Quality
-   - Visual Evidence: Exactly what you observed in the image (be specific)
-   - Likely Pollutant Categories: Based on deposit color and site type
-   - Confidence Level: Low / Medium / High (based on image quality and clarity)
-   - Recommendations: Practical next steps
+4. Be HONEST about image quality — if you cannot clearly see the web or make a confident assessment, say so and explain why.
 
 5. Do NOT give fake PM2.5 numbers or pretend to measure exact concentrations. Express uncertainty honestly.
 
@@ -881,6 +917,12 @@ Respond in this EXACT JSON format (no markdown, no backticks):
   "confidence_pct": 45,
   "visual_evidence": "Detailed description of exactly what you see on the silk threads",
   "deposit_analysis": "Analysis of deposit color, distribution, and density patterns",
+  "particle_size_fractions": {
+    "ultrafine_pct": 15,
+    "fine_pct": 60,
+    "coarse_pct": 25,
+    "basis": "Fine fraction dominant: uniform dark film on threads consistent with PM2.5 soot adhesion. Visible granules in lower left indicate coarse fraction (PM10). Ultrafine inferred from thread discoloration. Estimates based on Bartz et al. 2021 visual morphology criteria."
+  },
   "likely_pollutants": ["PM2.5", "Carbon particles", "Road dust"],
   "site_context_correlation": "How the site type and conditions support or modify the visual findings",
   "limitations": "Honest statement of what factors limit this assessment",
@@ -927,6 +969,11 @@ function animateProgress() {
 function showResults(data, meta) {
   goToStep(4);
 
+  // Ensure new field exists (graceful fallback for old responses)
+  if (!data.particle_size_fractions) {
+    data.particle_size_fractions = { ultrafine_pct: 0, fine_pct: 0, coarse_pct: 0, basis: 'Particle size fraction data not available for this analysis.' };
+  }
+
   const levelClass = {
     'Low': 'poll-low', 'Moderate': 'poll-moderate',
     'High': 'poll-high', 'Severe': 'poll-severe'
@@ -942,6 +989,48 @@ function showResults(data, meta) {
   const confPct = Math.min(100, Math.max(0, data.confidence_pct || (data.confidence === 'High' ? 75 : data.confidence === 'Medium' ? 50 : 25)));
 
   const imgSrc = document.getElementById('previewImg').src;
+
+  // ── Particle ratio values ──
+  const psf = data.particle_size_fractions;
+  const uf = Math.round(Math.max(0, psf.ultrafine_pct || 0));
+  const fi = Math.round(Math.max(0, psf.fine_pct || 0));
+  const co = Math.round(Math.max(0, psf.coarse_pct || 0));
+  const total = uf + fi + co;
+  // Normalise to 100 if AI gave non-100 sum
+  const ufN = total > 0 ? Math.round(uf * 100 / total) : 0;
+  const fiN = total > 0 ? Math.round(fi * 100 / total) : 0;
+  const coN = total > 0 ? (100 - ufN - fiN) : 0;
+  const hasRatio = total > 0;
+
+  const ratioPanel = hasRatio ? `
+    <div class="result-section">
+      <h4>Particle Size Fraction Estimate <span class="lit-badge">Bartz et al. 2021 · Górka et al. 2018</span></h4>
+      <p style="font-size:12px; color:#889; margin-bottom:12px; line-height:1.55;">
+        Visual morphology of silk thread deposits used to infer PM fraction dominance.
+        Uniform dark coating → fine/ultrafine; visible granules/clumps → coarse.
+        <em>Qualitative estimate only — not a calibrated measurement.</em>
+      </p>
+      <div class="ratio-bar-track">
+        <div class="ratio-seg ultrafine" style="width:${ufN}%">${ufN > 8 ? ufN + '%' : ''}</div>
+        <div class="ratio-seg fine"      style="width:${fiN}%">${fiN > 8 ? fiN + '%' : ''}</div>
+        <div class="ratio-seg coarse"    style="width:${coN}%">${coN > 8 ? coN + '%' : ''}</div>
+      </div>
+      <div class="ratio-legend">
+        <div class="ratio-legend-item">
+          <div class="ratio-swatch" style="background:#6b3fa0;"></div>
+          Ultrafine &lt;PM₁ &nbsp;<strong>${ufN}%</strong>
+        </div>
+        <div class="ratio-legend-item">
+          <div class="ratio-swatch" style="background:#0d6e6e;"></div>
+          Fine PM₂.₅ &nbsp;<strong>${fiN}%</strong>
+        </div>
+        <div class="ratio-legend-item">
+          <div class="ratio-swatch" style="background:#c17f3b;"></div>
+          Coarse PM₁₀ &nbsp;<strong>${coN}%</strong>
+        </div>
+      </div>
+      <div class="ratio-basis">${psf.basis || '—'}</div>
+    </div>` : '';
 
   document.getElementById('resultsContent').innerHTML = `
     <div class="result-header">
@@ -967,6 +1056,8 @@ function showResults(data, meta) {
       <h4>Deposit Analysis</h4>
       <div class="result-text"><p>${data.deposit_analysis || '—'}</p></div>
     </div>
+
+    ${ratioPanel}
 
     <div class="result-section">
       <h4>Likely Pollutant Categories</h4>
@@ -1107,13 +1198,42 @@ function downloadPDFReport() {
   if (badgeEl) addLine('Pollution Level: ' + badgeEl.textContent.trim(), 12, 'bold', [30, 40, 40]);
   addDivider();
 
-  // Sections
+  // Sections — iterate all result-sections
   const sections = rc.querySelectorAll('.result-section');
   sections.forEach(sec => {
     const title = sec.querySelector('h4');
-    const body = sec.querySelector('.result-text, .limitations-box, .confidence-bar-wrap, .pollutants-grid');
     if (!title) return;
-    const titleText = title.textContent.trim();
+    const titleText = title.textContent.replace(/[^\x20-\x7E]/g, '').trim(); // strip emoji/badges
+
+    // Special handling for particle ratio panel
+    const ratioBar = sec.querySelector('.ratio-bar-track');
+    if (ratioBar) {
+      addSectionTitle('Particle Size Fraction Estimate');
+      addLine('Literature basis: Bartz et al. (2021) Aerosol Sci; Górka et al. (2018); Stojanowska et al. (2022)', 8, 'italic', [100, 130, 130]);
+      // Draw coloured bar in PDF
+      const ufSeg = sec.querySelector('.ratio-seg.ultrafine');
+      const fiSeg = sec.querySelector('.ratio-seg.fine');
+      const coSeg = sec.querySelector('.ratio-seg.coarse');
+      const ufW = ufSeg ? parseFloat(ufSeg.style.width) : 0;
+      const fiW = fiSeg ? parseFloat(fiSeg.style.width) : 0;
+      const coW = coSeg ? parseFloat(coSeg.style.width) : 0;
+      const barH = 8; const barY = y; const barTotal = contentW;
+      if (ufW > 0) { doc.setFillColor(107, 63, 160); doc.roundedRect(margin, barY, barTotal * ufW / 100, barH, 1, 1, 'F'); }
+      if (fiW > 0) { doc.setFillColor(13, 110, 110); doc.roundedRect(margin + barTotal * ufW / 100, barY, barTotal * fiW / 100, barH, 1, 1, 'F'); }
+      if (coW > 0) { doc.setFillColor(193, 127, 59); doc.roundedRect(margin + barTotal * (ufW + fiW) / 100, barY, barTotal * coW / 100, barH, 1, 1, 'F'); }
+      y += barH + 6;
+      // Legend
+      const legendItems = sec.querySelectorAll('.ratio-legend-item');
+      let legendText = Array.from(legendItems).map(li => li.textContent.replace(/\s+/g, ' ').trim()).join('   ');
+      addLine(legendText, 9, 'normal', [50, 60, 65]);
+      // Basis text
+      const basisEl = sec.querySelector('.ratio-basis');
+      if (basisEl) addLine(basisEl.textContent.replace(/\s+/g, ' ').trim(), 9, 'italic', [100, 110, 110]);
+      y += 2;
+      return;
+    }
+
+    const body = sec.querySelector('.result-text, .limitations-box, .confidence-bar-wrap, .pollutants-grid');
     const bodyText = body ? body.textContent.replace(/\s+/g, ' ').trim() : '';
     if (!bodyText) return;
     addSectionTitle(titleText);
